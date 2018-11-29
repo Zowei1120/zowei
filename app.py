@@ -38,7 +38,7 @@ def handle_message(event):
 
 def Reply(text):
     if text == "hi":
-        text=='hello'
+        text='hello'
         return text
     else:
         text='你好啊'
