@@ -37,7 +37,7 @@ def handle_message(event):
     line_bot_api.reply_message(event.reply_token, message)
 
 def Reply(text):
-    if text == "hi":
+    if text == "hi"OR"Hi":
         text='hello'
         return text
     else:
