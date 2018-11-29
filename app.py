@@ -38,7 +38,10 @@ def handle_message(event):
 
 def Reply(text)
     if text == "hi":
-        return 'hello'
+        text=='hello'
+    else:
+        text='你好啊'
+        return text
 
 import os
 if __name__ == "__main__":
