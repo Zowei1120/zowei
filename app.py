@@ -36,13 +36,26 @@ def handle_message(event):
     message = TextSendMessage(text=Reply(event.message.text))
     line_bot_api.reply_message(event.reply_token, message)
 
-def Reply(text):
-    if text == "hi":
-        text='hello'
-        return text
+def KeyWord(text):
+    KeyWordDict = {"你好":"你好你好你好~","早安":"早安阿","幹":"不要罵髒話!"}
+    for k in KeyWordDict.keys():
+        if text.find(k) != -1:
+            return [True,KeyWordDict[k]]
+        return[False]
+
+def Reply(event):
+    Ktemp = KeyWord(event.message.text)
+    if Ktemp[0]:
+        line_bot_api.reply_Message(event.reply_token,TextSendMessage(text=Ktemp[1]))
     else:
-        text='你好啊'
-        return text
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text))
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    try:
+        Reply(event)
+    except Exception as e:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = str(e)))
 
 import os
 if __name__ == "__main__":
