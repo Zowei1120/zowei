@@ -54,27 +54,29 @@ def Reply(event):
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text))
 
 def Button(event):
-    message = TemplateSendMessage(
-        alt_text='Buttons template',
-        template=ButtonsTemplate(
-            thumbnail_image_url='水豚.jpg',
-            title='Menu',
-            text='Please select',
-            actions=[
-                PostbackTemplateAction(
+    return line_bot_api.reply_message(event.reply_token,
+        TemplateSendMessage(
+            alt_text='替代文字',
+            template=ButtonsTemplate(
+                thumbnail_image_url='水豚.jpg',
+                title='標題',
+                text='內容',
+                actions=[
+                    PostbackTemplateAction(
                     label='若薇好可愛',
-                    text='postback text',
-                    data='action=buy&itemid=1'
-                ),
-                MessageTemplateAction(
-                    label='若薇好漂亮',
-                    text='message text'
-                ),
-                URITemplateAction(
-                    label='若薇好棒棒',
-                    uri='http://example.com/'
-                )
-            ]
+                    text='發話文字',
+                    data='夾帶資料'
+                    ),
+                    MessageTemplateAction(
+                        label='若薇好漂亮',
+                        text='發話文字'
+                    ),
+                    URITemplateAction(
+                        label='若薇好棒棒',
+                        uri='網址'
+                    )
+                ]
+            )
         )
     )
 line_bot_api.reply_message(event.reply_token, message)
