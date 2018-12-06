@@ -43,21 +43,21 @@ def Button(event):
     message = TemplateSendMessage(
         alt_text='Buttons template',
         template=ButtonsTemplate(
-            thumbnail_image_url='https://example.com/image.jpg',
+            thumbnail_image_url='水豚.jpg',
             title='Menu',
             text='Please select',
             actions=[
                 PostbackTemplateAction(
-                    label='postback',
+                    label='若薇好可愛',
                     text='postback text',
                     data='action=buy&itemid=1'
                 ),
                 MessageTemplateAction(
-                    label='message',
+                    label='若薇好棒棒',
                     text='message text'
                 ),
                 URITemplateAction(
-                    label='uri',
+                    label='若薇好漂亮',
                     uri='http://example.com/'
                 )
             ]
