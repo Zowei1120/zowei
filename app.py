@@ -54,7 +54,7 @@ def Button(event):
                 ),
                 MessageTemplateAction(
                     label='若薇好棒棒',
-                    text='message text'
+                    text='若薇超棒的♥'
                 ),
                 URITemplateAction(
                     label='若薇好聰明',
