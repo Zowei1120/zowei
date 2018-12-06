@@ -33,8 +33,10 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=Reply(event.message.text))
-    line_bot_api.reply_message(event.reply_token, message)
+    try:
+        Reply(event)
+    except Exception as e:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = str(e)))
 
 def KeyWord(text):
     KeyWordDict = {"你好":"你好你好你好~","早安":"早安阿","幹":"不要罵髒話!"}
@@ -50,12 +52,7 @@ def Reply(event):
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text))
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    try:
-        Reply(event)
-    except Exception as e:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = str(e)))
+
 
 import os
 if __name__ == "__main__":
