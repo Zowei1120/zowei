@@ -55,11 +55,11 @@ def Reply(event):
 
 def Button():
     message = TemplateSendMessage(
-    alt_text='Buttons template',
-    template=ButtonsTemplate(
-        thumbnail_image_url='https://example.com/image.jpg',
-        title='Menu',
-        text='Please select',
+        alt_text='Buttons template',
+        template=ButtonsTemplate(
+            thumbnail_image_url='https://example.com/image.jpg',
+            title='Menu',
+            text='Please select',
             actions=[
                 PostbackTemplateAction(
                     label='若薇好可愛',
@@ -75,7 +75,7 @@ def Button():
                     uri='http://example.com/'
                 )
             ]
-      )
+        )
     )
 line_bot_api.reply_message(event.reply_token, message)
 
