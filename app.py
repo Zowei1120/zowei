@@ -48,16 +48,16 @@ def Button(event):
             text='Please select',
             actions=[
                 PostbackTemplateAction(
-                    label='hey',
+                    label='若薇好可愛',
                     text='postback text',
                     data='action=buy&itemid=1'
                 ),
                 MessageTemplateAction(
-                    label='hey',
+                    label='若薇好棒棒',
                     text='message text'
                 ),
                 URITemplateAction(
-                    label='hey',
+                    label='若薇好聰明',
                     uri='http://example.com/'
                 )
             ]
