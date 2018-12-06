@@ -30,45 +30,41 @@ def callback():
         abort(400)
     return 'OK'
 
+def Reply(event):
+    return line_bot_api.reply_message(event.reply_token,
+        TemplateSendMessage(
+            alt_text='替代文字',
+            template=ButtonsTemplate(
+                thumbnail_image_url='圖案路徑.jpg',
+                title='標題',
+                text='內容',
+                actions=[
+                    PostbackTemplateAction(
+                    label='按鈕文字',
+                    text='發話文字',
+                    data='夾帶資料'
+                    ),
+                    MessageTemplateAction(
+                        label='按鈕文字',
+                        text='發話文字'
+                    ),
+                    URITemplateAction(
+                        label='按鈕文字',
+                        uri='網址'
+                    )
+                ]
+            )
+        )
+    )
+
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     try:
-        #Reply(event)
-        Button(event)
+        Reply(event)
     except Exception as e:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = str(e)))
-
-def KeyWord(text):
-    KeyWordDict = {"你好":"你好你好你好~","早安":"早安阿","幹":"不要罵髒話!"}
-    for k in KeyWordDict.keys():
-        if text.find(k) != -1:
-            return [True,KeyWordDict[k]]
-        return [False]
-
-def Reply(event):
-    Ktemp = KeyWord(event.message.text)
-    if Ktemp[0]:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = Ktemp[1]))
-    else:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text))
-
-def Button(event):
-    line_bot_api.reply_message(event.reply_token,
-        TemplateSendMessage(
-            alt_text='替代文字',
-            template=ButtonsTemplate(
-                thumbnail_image_url='水豚.jpg',
-                title='標題',
-                text='內容',
-                actions=[
-                    PostbackTemplateAction(label='若薇好可愛',text='發話文字',data='夾帶資料'),
-                    MessageTemplateAction(label='若薇好漂亮',text='發話文字'),
-                    URITemplateAction(label='若薇好棒棒',uri='網址')]
-            )
-        )
-    )
-    line_bot_api.reply_message(event.reply_token, message)
+        line_bot_api.reply_message(event.reply_token, 
+            TextSendMessage(text=str(e)))
 
 import os
 if __name__ == "__main__":
