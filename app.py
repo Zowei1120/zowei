@@ -49,7 +49,7 @@ def Button(event):
             actions=[
                 PostbackTemplateAction(
                     label='若薇好可愛',
-                    text='postback text',
+                    text='我也覺得若薇好可愛',
                     data='action=buy&itemid=1'
                 ),
                 MessageTemplateAction(
