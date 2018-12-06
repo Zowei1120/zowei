@@ -62,20 +62,9 @@ def Button(event):
                 title='標題',
                 text='內容',
                 actions=[
-                    PostbackTemplateAction(
-                    label='若薇好可愛',
-                    text='發話文字',
-                    data='夾帶資料'
-                    ),
-                    MessageTemplateAction(
-                        label='若薇好漂亮',
-                        text='發話文字'
-                    ),
-                    URITemplateAction(
-                        label='若薇好棒棒',
-                        uri='網址'
-                    )
-                ]
+                    PostbackTemplateAction(label='若薇好可愛',text='發話文字',data='夾帶資料'),
+                    MessageTemplateAction(label='若薇好漂亮',text='發話文字'),
+                    URITemplateAction(label='若薇好棒棒',uri='網址')]
             )
         )
     )
