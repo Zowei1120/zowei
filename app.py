@@ -119,8 +119,7 @@ def handle_postback(event):
 	if command[0]=="若薇好可愛":
 		line_bot_api.reply_message(event.reply_token,
 			TextSendMessage(text="是不是~~~"))
-		line_bot_api.push_message(event.source.user_id,
-			TextSendMessage(text=event.source.user_id))
+
 
 
 import os
