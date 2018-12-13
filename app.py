@@ -42,7 +42,7 @@ def callback():
 
 def Button(event):
     message = TemplateSendMessage(
-        alt_text='特殊訊息，請進入手機查看',,
+        alt_text='特殊訊息，請進入手機查看',
         template=ButtonsTemplate(
             thumbnail_image_url='https://github.com/Zowei1120/zowei/blob/master/%E6%B0%B4%E8%B1%9A.jpg?raw=true',
             title='Menu',
