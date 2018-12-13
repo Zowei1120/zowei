@@ -89,9 +89,9 @@ def handle_message(event):
 @handler.add(PostbackEvent)
 def handle_postback(event):
 	command = event.postback.data.split(',')
-	if command[0]=="還沒":
+	if command[0]=="若薇好可愛":
 		line_bot_api.reply_message(event.reply_token,
-			TextSendMessage(text="還沒就趕快練習去~~~"))
+			TextSendMessage(text="是不是~~~"))
 
 import os
 if __name__ == "__main__":
