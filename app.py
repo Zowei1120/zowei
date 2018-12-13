@@ -57,8 +57,10 @@ def Button(event):
                     text='若薇超棒的♥'
                 ),
                 URITemplateAction(
-                    label='若薇好聰明',
-                    uri='http://example.com/'
+                    label='我好想認識若薇',
+                    data='我好想認識若薇',
+                    uri='https://www.instagram.com/zowei1120/'
+
                 )
             ]
         )
@@ -92,6 +94,9 @@ def handle_postback(event):
 	if command[0]=="若薇好可愛":
 		line_bot_api.reply_message(event.reply_token,
 			TextSendMessage(text="是不是~~~"))
+	elif command[0]=="我好想認識若薇":
+		line_bot_api.reply_message(event.reply_token,
+			TextSendMessage(text="眼光真好!"))
 
 import os
 if __name__ == "__main__":
