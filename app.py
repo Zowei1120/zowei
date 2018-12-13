@@ -42,7 +42,7 @@ def callback():
 
 def Button(event):
     message = TemplateSendMessage(
-        alt_text='Buttons template',
+        alt_text='特殊訊息，請進入手機查看',,
         template=ButtonsTemplate(
             thumbnail_image_url='https://github.com/Zowei1120/zowei/blob/master/%E6%B0%B4%E8%B1%9A.jpg?raw=true',
             title='Menu',
@@ -76,6 +76,31 @@ def Button(event):
         line_bot_api.reply_message(event.reply_token,
             TextSendMessage(text = event.message.text))
             '''
+#回覆函式
+def Reply(event):
+    tempText = event.message.text.split(",")
+    if tempText[0] == "發送" and event.source.user_id == "U10effeaeced164d73397ef798539b586":
+        line_bot_api.push_message(tempText[1], TextSendMessage(text=tempText[2]))
+    else:
+        Ktemp = KeyWord(event)
+        if Ktemp[0]:
+            line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(text = Ktemp[1]))
+        else:
+            line_bot_api.reply_message(event.reply_token,
+                Button(event))
+
+# 處理訊息(監聽)
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    try:
+        Reply(event)
+        line_bot_api.push_message("U10effeaeced164d73397ef798539b586", TextSendMessage(text=event.source.user_id))
+        line_bot_api.push_message("U10effeaeced164d73397ef798539b586", TextSendMessage(text=event.message.text))
+    except Exception as e:
+        line_bot_api.reply_message(event.reply_token, 
+            TextSendMessage(text=str(e)))
+
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
@@ -96,6 +121,7 @@ def handle_postback(event):
 			TextSendMessage(text="是不是~~~"))
 		line_bot_api.push_message(event.source.user_id,
 			TextSendMessage(text=event.source.user_id))
+
 
 import os
 if __name__ == "__main__":
