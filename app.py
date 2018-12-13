@@ -32,41 +32,53 @@ def callback():
 
 #關鍵字系統
 def KeyWord(event):
-    KeyWordDict = {"你好":"你也好啊",
-                   "你是誰":"我是大帥哥",
-                   "帥":"帥炸了",
-                   "差不多了":"讚!!!"}
+    KeyWordDict = {"你好":"你好你好",
+                   "早安阿":"早安安",
+                   "早安":"早安阿",
+                   "Hello":"嗨"}
 
     for k in KeyWordDict.keys():
         if event.message.text.find(k) != -1:
             return [True,KeyWordDict[k]]
     return [False]
 
-#按鈕版面系統
+
 def Button(event):
-    return TemplateSendMessage(
+    message = TemplateSendMessage(
         alt_text='特殊訊息，請進入手機查看',
         template=ButtonsTemplate(
-            thumbnail_image_url='https://github.com/54bp6cl6/LineBotClass/blob/master/logo.jpg?raw=true',
-            title='HPClub - Line Bot 教學',
-            text='大家學會了ㄇ',
+            thumbnail_image_url='https://github.com/Zowei1120/zowei/blob/master/%E6%B0%B4%E8%B1%9A.jpg?raw=true',
+            title='Menu',
+            text='Please select',
             actions=[
                 PostbackTemplateAction(
-                    label='還沒',
-                    data='還沒'
+                    label='若薇好可愛',
+                    text='我也覺得若薇好可愛',
+                    data='若薇好可愛'
                 ),
                 MessageTemplateAction(
-                    label='差不多了',
-                    text='差不多了'
+                    label='若薇好棒棒',
+                    text='若薇超棒的♥'
                 ),
                 URITemplateAction(
-                    label='幫我們按個讚',
-                    uri='https://www.facebook.com/ShuHPclub'
+                    label='我好想認識若薇',
+                    uri='https://www.instagram.com/zowei1120/'
+
                 )
             ]
         )
     )
+    line_bot_api.reply_message(event.reply_token, message)
 
+'''def Reply(event):
+    Ktemp = KeyWord(event.message.text)
+    if Ktemp[0]:
+        line_bot_api.reply_message(event.reply_token,
+            TextSendMessage(text = Ktemp[1]))
+    else:
+        line_bot_api.reply_message(event.reply_token,
+            TextSendMessage(text = event.message.text))
+            '''
 #回覆函式
 def Reply(event):
     tempText = event.message.text.split(",")
@@ -81,7 +93,7 @@ def Reply(event):
             line_bot_api.reply_message(event.reply_token,
                 Button(event))
 
-# 處理訊息
+# 處理訊息(監聽)
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     try:
@@ -92,14 +104,26 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, 
             TextSendMessage(text=str(e)))
 
+'''
+# 處理訊息
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    try:
+        Button(event)
+        #Reply(event)
+    except Exception as e:
+        line_bot_api.reply_message(event.reply_token, 
+            TextSendMessage(text=str(e)))
+'''
 #處理Postback
 @handler.add(PostbackEvent)
 def handle_postback(event):
-    command = event.postback.data.split(',')
-    if command[0] == "還沒":
-        line_bot_api.reply_message(event.reply_token, 
-            TextSendMessage(text="還沒就趕快練習去~~~"))
-        line_bot_api.push_message(event.source.user_id, TextSendMessage(text=event.source.user_id))
+	command = event.postback.data.split(',')
+	if command[0]=="若薇好可愛":
+		line_bot_api.reply_message(event.reply_token,
+			TextSendMessage(text="是不是~~~"))
+
+
 
 import os
 if __name__ == "__main__":
