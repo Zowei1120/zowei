@@ -95,8 +95,7 @@ def handle_postback(event):
 		line_bot_api.reply_message(event.reply_token,
 			TextSendMessage(text="是不是~~~"))
 		line_bot_api.push_message(event.source.user_id,
-			TextSendMessage(text="你也很可愛喇嘿嘿"))
-
+			TextSendMessage(text=event.source.user_id))
 
 import os
 if __name__ == "__main__":
