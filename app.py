@@ -31,14 +31,15 @@ def callback():
     return 'OK'
 
 '''def KeyWord(text):
-    KeyWordDict = {"你好":"你也好啊",
-                   "你是誰":"我是大帥哥",
-                   "帥":"帥炸了"}
+    KeyWordDict = {"你好":"你好~~",
+                   "若薇":"大美女",
+                   "早安":"早安安"}
     for k in KeyWordDict.keys():
         if text.find(k) != -1:
             return [True,KeyWordDict[k]]
     return [False]
 '''
+
 def Button(event):
     message = TemplateSendMessage(
         alt_text='Buttons template',
@@ -58,7 +59,6 @@ def Button(event):
                 ),
                 URITemplateAction(
                     label='我好想認識若薇',
-                    data='我好想認識若薇',
                     uri='https://www.instagram.com/zowei1120/'
 
                 )
@@ -94,9 +94,9 @@ def handle_postback(event):
 	if command[0]=="若薇好可愛":
 		line_bot_api.reply_message(event.reply_token,
 			TextSendMessage(text="是不是~~~"))
-	elif command[0]=="我好想認識若薇":
-		line_bot_api.reply_message(event.reply_token,
-			TextSendMessage(text="眼光真好!"))
+		line_bot_api.push_message(event.source.user_id,
+			TextSendMessage(text="你也很可愛喇嘿嘿"))
+
 
 import os
 if __name__ == "__main__":
