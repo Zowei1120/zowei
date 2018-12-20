@@ -30,24 +30,33 @@ def callback():
         abort(400)
     return 'OK'
 
+#----------從這裡開始複製----------
+
 #關鍵字系統
-def KeyWord(event):
-    KeyWordDict = {"你好":"你好你好",
-                   "早安阿":"早安安",
-                   "早安":"早安阿",
-                   "Hello":"嗨"}
+def Keyword(event):
+    KeyWordDict = {"你好":["text","你也好啊"],
+                   "你是誰":["text","我是大帥哥"],
+                   "差不多了":["text","讚!!!"],
+                   "帥":["sticker",'1','120']}
 
     for k in KeyWordDict.keys():
         if event.message.text.find(k) != -1:
-            return [True,KeyWordDict[k]]
-    return [False]
+            if KeyWordDict[k][0] == "text":
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text = KeyWordDict[k][1]))
+            elif KeyWordDict[k][0] == "sticker":
+                line_bot_api.reply_message(event.reply_token,StickerSendMessage(
+                    package_id=KeyWordDict[k][1],
+                    sticker_id=KeyWordDict[k][2]))
+            return True
+    return False
 
-
+#按鈕版面系統
 def Button(event):
-    message = TemplateSendMessage(
-        alt_text='特殊訊息，請進入手機查看',
-        template=ButtonsTemplate(
-            thumbnail_image_url='https://github.com/Zowei1120/zowei/blob/master/%E6%B0%B4%E8%B1%9A.jpg?raw=true',
+    line_bot_api.reply_message(event.reply_token,
+        TemplateSendMessage(
+            alt_text='特殊訊息，請進入手機查看',
+            template=ButtonsTemplate(
+                thumbnail_image_url='https://github.com/Zowei1120/zowei/blob/master/%E6%B0%B4%E8%B1%9A.jpg?raw=true',
             title='Menu',
             text='Please select',
             actions=[
@@ -65,65 +74,55 @@ def Button(event):
                     uri='https://www.instagram.com/zowei1120/'
 
                 )
-            ]
+                ]
+            )
         )
     )
-    line_bot_api.reply_message(event.reply_token, message)
 
-'''def Reply(event):
-    Ktemp = KeyWord(event.message.text)
-    if Ktemp[0]:
-        line_bot_api.reply_message(event.reply_token,
-            TextSendMessage(text = Ktemp[1]))
-    else:
-        line_bot_api.reply_message(event.reply_token,
-            TextSendMessage(text = event.message.text))
-            '''
-#回覆函式
-def Reply(event):
+#指令系統，若觸發指令會回傳True
+def Command(event):
     tempText = event.message.text.split(",")
-    if tempText[0] == "發送" and event.source.user_id == "U10effeaeced164d73397ef798539b586":
+    if tempText[0] == "發送" and event.source.user_id == "U95418ebc4fffefdd89088d6f9dabd75b":
         line_bot_api.push_message(tempText[1], TextSendMessage(text=tempText[2]))
+        return True
     else:
-        Ktemp = KeyWord(event)
-        if Ktemp[0]:
-            line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(text = Ktemp[1]))
-        else:
-            line_bot_api.reply_message(event.reply_token,
-                Button(event))
+        return False
 
-# 處理訊息(監聽)
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    try:
-        Reply(event)
-        line_bot_api.push_message("U10effeaeced164d73397ef798539b586", TextSendMessage(text=event.source.user_id))
-        line_bot_api.push_message("U10effeaeced164d73397ef798539b586", TextSendMessage(text=event.message.text))
-    except Exception as e:
-        line_bot_api.reply_message(event.reply_token, 
-            TextSendMessage(text=str(e)))
+#回覆函式，指令 > 關鍵字 > 按鈕
+def Reply(event):
+    if not Command(event):
+        if not Keyword(event):
+            Button(event)
 
-'''
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     try:
-        Button(event)
-        #Reply(event)
+        Reply(event)
+        '''
+        line_bot_api.push_message("U95418ebc4fffefdd89088d6f9dabd75b", TextSendMessage(text=event.source.user_id + "說:"))
+        line_bot_api.push_message("U95418ebc4fffefdd89088d6f9dabd75b", TextSendMessage(text=event.message.text))
+        '''
     except Exception as e:
         line_bot_api.reply_message(event.reply_token, 
             TextSendMessage(text=str(e)))
-'''
+
 #處理Postback
 @handler.add(PostbackEvent)
 def handle_postback(event):
-	command = event.postback.data.split(',')
-	if command[0]=="若薇好可愛":
-		line_bot_api.reply_message(event.reply_token,
-			TextSendMessage(text="是不是~~~"))
-
-
+    command = event.postback.data.split(',')
+    if command[0] == "還沒":
+        line_bot_api.reply_message(event.reply_token, 
+            TextSendMessage(text="還沒就趕快練習去~~~"))
+        
+@handler.add(MessageEvent, message=StickerMessage)
+def handle_sticker_message(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        StickerSendMessage(
+            package_id='1',
+            sticker_id='410')
+    )
 
 import os
 if __name__ == "__main__":
